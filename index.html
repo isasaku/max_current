@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1.0">
+  <title>Sample</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <nav class="navbar bg-primary mb-4">
+    <h1 class="display-4 text-light">current-sort</h1>
+  </nav>  
+  <div class="container mt-4">
+    <p>please click botton.</p>
+    <form>
+        <input id="file" type="file" name="file">
+    </form>        
+    <p>
+      <textarea id="showOut"></textarea>
+    </p>
+    <p>カラム名</p>
+    <input type="text" id="culName"/>
+    <button tyoe="botton" id="btn-sort">ソート</button>
+    <p>
+      <textarea id="output"></textarea>
+    </p>    
+  </div>
+  <script>
+    let fileIn;
+    let fileLine;
+    let suuti=[];
+    let culsuu=[];
+    let culsuuti=[];
+    let fileInput = document.getElementById('file');
+    let fileReader = new FileReader();
+    fileInput.onchange = () => {
+    let file = fileInput.files[0];
+    fileReader.readAsText(file);
+    };
+    fileReader.onload = () =>{
+        fileIn=fileReader.result;
+        document.querySelector('#showOut').value=fileIn;
+        fileLine=fileIn.toString().split('\n');
+        fileLine.forEach((item,index)=>{
+        suuti[index]=fileLine[index].split(',');  //２次元配列作成
+      });
+    };       
+    let textbox=document.getElementById("culName");    
+    document.querySelector('#btn-sort').addEventListener('click',() => {
+        let no=suuti[16].indexOf(textbox.value);
+        culsuu=suuti.map(item=>item[no])   //２次元配列から列を抜き取る
+        culsuuti=culsuu.map(Number);  
+        let fu=(a,b)=>b-a
+        let colsuuti=culsuuti.sort(fu);
+        document.querySelector('#output').value=colsuuti.join('\n');
+                  
+    });
+    
+  </script>    
+</body>
+</html>
